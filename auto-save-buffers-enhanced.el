@@ -8,6 +8,7 @@
 ;;         codes written by Satoru Takabayashi and enhances original
 ;;         one. Thanks a lot!!!
 ;;         See http://0xcc.net/misc/auto-save/
+;; Package-Requires: ((emacs "25.1"))
 
 ;; This file is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published
@@ -256,6 +257,13 @@ the directories under VCS."
     (auto-save-buffers-enhanced-quiet-save-buffer))
    (t (save-buffer))))
 
+(defun auto-save-buffers-enhanced-quiet-save-buffer ()
+  (let ((save-silently t)
+        (inhibit-message t))
+    (save-buffer)
+    (set-visited-file-modtime)
+    (set-buffer-modified-p nil)))
+
 (defun auto-save-buffers-enhanced-regexps-match-p (regexps string)
   (catch 'matched
     (dolist (regexp regexps)
@@ -298,3 +306,8 @@ the directories under VCS."
 (provide 'auto-save-buffers-enhanced)
 
 ;;; auto-save-buffers-enhanced.el ends here
+
+;; Local Variables:
+;; coding: utf-8
+;; indent-tabs-mode: nil
+;; End:
