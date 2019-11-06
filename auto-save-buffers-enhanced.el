@@ -258,11 +258,12 @@ the directories under VCS."
    (t (save-buffer))))
 
 (defun auto-save-buffers-enhanced-quiet-save-buffer ()
-  (let ((save-silently t)
-        (inhibit-message t))
-    (save-buffer)
-    (set-visited-file-modtime)
-    (set-buffer-modified-p nil)))
+  (with-temp-message (current-message)
+    (let ((save-silently t)
+          (inhibit-message t))
+      (save-buffer)
+      (set-visited-file-modtime)
+      (set-buffer-modified-p nil))))
 
 (defun auto-save-buffers-enhanced-regexps-match-p (regexps string)
   (catch 'matched
